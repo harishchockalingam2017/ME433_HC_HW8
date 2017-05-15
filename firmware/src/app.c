@@ -121,6 +121,9 @@ void APP_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
+    TRISAbits.TRISA4=0;
+    TRISBbits.TRISB4=1;
+    LATAbits.LATA4=1;
 }
 
 
@@ -154,7 +157,15 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
+            while(1) {
+                _CP0_SET_COUNT(0);
+                while(_CP0_GET_COUNT()<25000){;} //0.001/(1/25000000)
+                LATAINV=0b10000;
+                _CP0_SET_COUNT(0);
+                while(!PORTBbits.RB4){;}
+                    // use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
+                    // remember the core timer runs at half the sysclk
+            }
             break;
         }
 
