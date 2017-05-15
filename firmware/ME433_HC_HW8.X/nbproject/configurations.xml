@@ -19,6 +19,8 @@
           </logicalFolder>
         </logicalFolder>
         <itemPath>../src/app.h</itemPath>
+        <itemPath>../../../../../../../Documents/ME433/ME433_HC_HW7/ME433_HC_HW7.X/i2c_lib.h</itemPath>
+        <itemPath>../../../../../../../Documents/ME433/ME433_HC_HW7/ME433_HC_HW7.X/lcd_lib.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="framework" projectFiles="true">
         <logicalFolder name="f1" displayName="gfx" projectFiles="true">
@@ -96,6 +98,8 @@
         </logicalFolder>
         <itemPath>../src/app.c</itemPath>
         <itemPath>../src/main.c</itemPath>
+        <itemPath>../../../../../../../Documents/ME433/ME433_HC_HW7/ME433_HC_HW7.X/i2c_lib.c</itemPath>
+        <itemPath>../../../../../../../Documents/ME433/ME433_HC_HW7/ME433_HC_HW7.X/lcd_lib.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="framework" projectFiles="true">
         <logicalFolder name="f1" displayName="system" projectFiles="true">
@@ -119,6 +123,7 @@
     <Elem>../..</Elem>
     <Elem>../src/default</Elem>
     <Elem>../src/system_config/default</Elem>
+    <Elem>../../../../../../../Documents/ME433/ME433_HC_HW7/ME433_HC_HW7.X</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -130,7 +135,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>1.40</languageToolchainVersion>
+        <languageToolchainVersion>1.42</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <compileType>

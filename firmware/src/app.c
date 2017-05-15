@@ -54,6 +54,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
+#include "i2c_lib.h"
+#include "lcd_lib.h"
+#include "stdio.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -121,6 +124,10 @@ void APP_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
+    SPI1_init();
+    LCD_init();
+    I2C_master_setup();
+    
     TRISAbits.TRISA4=0;
     TRISBbits.TRISB4=1;
     LATAbits.LATA4=1;
@@ -157,14 +164,41 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
+            
+            LCD_clearScreen(0x00FF);
+            char message[100];
+    
+            char whoami=getState(0x0F);
+            sprintf(message,"WHOAMI ");
+            drawString(5,2,message);
+            sprintf(message,"%d",whoami);
+            drawString(5,12,message);
+    
+            sprintf(message,"X");
+            drawString(120,64,message);
+            sprintf(message,"Y");
+            drawString(64,2,message);
+    
+            int i;
+            char data_ap[14];
+            short comb_data[7];
+    
             while(1) {
-                _CP0_SET_COUNT(0);
-                while(_CP0_GET_COUNT()<25000){;} //0.001/(1/25000000)
-                LATAINV=0b10000;
-                _CP0_SET_COUNT(0);
-                while(!PORTBbits.RB4){;}
-                    // use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
-                    // remember the core timer runs at half the sysclk
+             _CP0_SET_COUNT(0);
+             while(_CP0_GET_COUNT()<4800000){;
+             while(!PORTBbits.RB4){;}}
+        
+            I2C_read_multiple(IMU_ADD,0x20,data_ap,14);
+        
+            for(i=0; i<7; i=i+1){
+             comb_data[i]=combine(data_ap[2*i],data_ap[1+2*i]);
+            }
+        
+            xdirect(64,64,0xFFE0,50,4,comb_data[4]);
+            ydirect(64,64,0x07E0,50,4,comb_data[5]);
+            LATAINV=0b10000;
+            // use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
+            // remember the core timer runs at half the sysclk
             }
             break;
         }
